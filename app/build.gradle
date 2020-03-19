@@ -1,0 +1,73 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply from: '../ext.gradle'
+
+def VERSION_NAME = "1.0"
+def VERSION_CODE = 1
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+    defaultConfig {
+        applicationId "com.challengeadr.newsapifeed"
+        minSdkVersion ver.minSdkVersion
+        targetSdkVersion ver.targetSdkVersion
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    kotlinOptions {
+        jvmTarget = ver.kotlinJvmTarget
+    }
+
+    compileOptions {
+        sourceCompatibility ver.sourceCompatibility
+        targetCompatibility ver.targetCompatibility
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    implementation dep.coil
+
+    implementation dep.jdk
+    implementation dep.appcompat
+    implementation dep.ktxcore
+//    implementation dep.constraintLayout
+
+    implementation dep.dagger
+    implementation dep.daggerAndroid
+    kapt dep.daggerCompiler
+    kapt dep.daggerProcessor
+
+//    implementation dep.rxJava
+//    implementation dep.rxAndroid
+
+    testImplementation dep.junit
+    androidTestImplementation dep.testRunner
+    androidTestImplementation dep.testEspresso
+    testImplementation dep.mockito
+//    testImplementation dep.json
+
+//    implementation dep.cardview
+    implementation dep.recyclerview
+//    implementation dep.coordinatorLayout
+    implementation dep.androidMaterial
+}

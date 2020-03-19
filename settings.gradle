@@ -1,0 +1,2 @@
+rootProject.name='NewsApiFeedADR'
+include ':app'
