@@ -10,7 +10,7 @@ buildscript {
     dependencies {
         classpath dep.androidGradlePlugin
         classpath dep.kotlinGradlePlugin
-
+        classpath dep.realmGradle
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -20,7 +20,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+        maven { url 'https://github.com/mak0t0san/stetho-realm/raw/master/maven-repo' } // for stetho realm module
     }
 }
 

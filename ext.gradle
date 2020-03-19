@@ -34,11 +34,14 @@ ext.dep = [
         rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.9',
         rxAndroid          : 'io.reactivex.rxjava2:rxandroid:2.0.2',
 
-        retrofit: 'com.squareup.retrofit:retrofit:1.9.0',
-        gson: 'com.squareup.retrofit2:converter-gson:2.3.0',
-        rxAdapter: 'com.squareup.retrofit2:adapter-rxjava2:2.5.0',
-        okhttp3: 'com.squareup.okhttp3:logging-interceptor:3.12.1',
+        retrofit           : 'com.squareup.retrofit:retrofit:1.9.0',
+        gson               : 'com.squareup.retrofit2:converter-gson:2.3.0',
+        rxAdapter          : 'com.squareup.retrofit2:adapter-rxjava2:2.5.0',
+        okhttp3            : 'com.squareup.okhttp3:logging-interceptor:3.12.1',
 
+        realmGradle        : "io.realm:realm-gradle-plugin:6.1.0",
+        stetho             : 'com.facebook.stetho:stetho:1.5.1',
+        stethoRealm        : 'com.uphyca:stetho_realm:2.2.1',
 
         // tools
 //        coil               : 'io.coil-kt:coil:0.6.1',

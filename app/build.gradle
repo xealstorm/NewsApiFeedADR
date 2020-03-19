@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'realm-android'
 apply from: '../ext.gradle'
 
 def VERSION_NAME = "1.0"
@@ -64,6 +65,9 @@ dependencies {
     implementation dep.gson
     implementation dep.okhttp3
     implementation dep.rxAdapter
+
+    implementation dep.stetho
+    implementation dep.stethoRealm
 
     testImplementation dep.junit
     androidTestImplementation dep.testRunner
