@@ -57,6 +57,7 @@ dependencies {
     implementation dep.jdk
     implementation dep.appcompat
     implementation dep.ktxcore
+    implementation dep.joda
 //    implementation dep.constraintLayout
 
     implementation dep.dagger

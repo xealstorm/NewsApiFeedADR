@@ -12,6 +12,12 @@ import javax.inject.Singleton
 class AppModule(private val app: App) {
     @Provides
     @Singleton
+    fun provideApp(): App {
+        return app
+    }
+
+    @Provides
+    @Singleton
     fun provideRealm(app: App): Realm {
         return RealmCreator.create(app.applicationContext)
     }

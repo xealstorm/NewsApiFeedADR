@@ -22,6 +22,7 @@ object RealmCreator {
         Realm.init(context)
         val configuration = RealmConfiguration.Builder()
             .name(REALM_FILE_NAME)
+            .modules(RealmModule())
             .schemaVersion(1)
             .build()
         return Realm.getInstance(configuration)

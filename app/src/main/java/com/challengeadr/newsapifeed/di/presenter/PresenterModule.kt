@@ -1,5 +1,6 @@
 package com.challengeadr.newsapifeed.di.presenter
 
+import com.challengeadr.newsapifeed.db.repository.NewsRepository
 import com.challengeadr.newsapifeed.di.activity.ActivityScope
 import com.challengeadr.newsapifeed.network.NetworkService
 import com.challengeadr.newsapifeed.presentation.newsfeed.presenter.NewsPresenter
@@ -14,8 +15,9 @@ class PresenterModule {
     @ActivityScope
     fun provideNewsPresenter(
         networkService: NetworkService,
+        newsRepository: NewsRepository,
         schedulerProvider: AppSchedulerProvider
     ): NewsPresenter {
-        return NewsPresenterImpl(networkService, schedulerProvider)
+        return NewsPresenterImpl(networkService, newsRepository, schedulerProvider)
     }
 }
