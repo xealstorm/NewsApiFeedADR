@@ -4,6 +4,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'realm-android'
 apply from: '../ext.gradle'
+apply from: '../security.gradle'
 
 def VERSION_NAME = "1.0"
 def VERSION_CODE = 1
@@ -31,17 +32,22 @@ android {
         targetCompatibility ver.targetCompatibility
     }
 
-    dataBinding {
-        enabled = true
-    }
-
     buildTypes {
+        debug {
+            buildConfigField "String", "NEWS_ORG_API_KEY", tokens.newsOrgApiKey
+            buildConfigField "String", "NEWS_ORG_ENDPOINT", tokens.newsOrgEndpoint
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "NEWS_ORG_API_KEY", tokens.newsOrgApiKey
+            buildConfigField "String", "NEWS_ORG_ENDPOINT", tokens.newsOrgEndpoint
         }
     }
 
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {

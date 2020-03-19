@@ -1,5 +1,8 @@
 package com.challengeadr.newsapifeed.di.network
 
+import com.challengeadr.newsapifeed.network.NetworkService
+import com.challengeadr.newsapifeed.network.NetworkServiceImpl
+import com.challengeadr.newsapifeed.util.network.AuthorizationHeaderInterceptor
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -33,11 +36,18 @@ class NetworkServicesModule(private var baseUrl: String) {
 
     @Provides
     @Singleton
+    fun provideAuthorizationHeaderInterceptor():AuthorizationHeaderInterceptor =
+        AuthorizationHeaderInterceptor()
+
+    @Provides
+    @Singleton
     fun provideOkhttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        authorizationHeaderInterceptor: AuthorizationHeaderInterceptor
     ): OkHttpClient {
         val client = OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(authorizationHeaderInterceptor)
         return client.build()
     }
 
@@ -52,4 +62,11 @@ class NetworkServicesModule(private var baseUrl: String) {
             .build()
     }
 
+    @Provides
+    @Singleton
+    fun provideNetworkService(
+        retrofit: Retrofit
+    ): NetworkService {
+        return NetworkServiceImpl(retrofit)
+    }
 }

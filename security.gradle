@@ -1,0 +1,4 @@
+ext.tokens = [
+        newsOrgApiKey  : "\"place_your_news_org_API_key_here\"",
+        newsOrgEndpoint: "\"https://newsapi.org\""
+]
