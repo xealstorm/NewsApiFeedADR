@@ -88,3 +88,4 @@ lint/tmp/
 .idea/codeStyles/codeStyleConfig.xml
 .idea/.name
 .DS_Store
+security.gradle
