@@ -57,12 +57,13 @@ dependencies {
     kapt dep.daggerCompiler
     kapt dep.daggerProcessor
 
-//    implementation dep.rxJava
-//    implementation dep.rxAndroid
+    implementation dep.rxJava
+    implementation dep.rxAndroid
 
     implementation dep.retrofit
     implementation dep.gson
     implementation dep.okhttp3
+    implementation dep.rxAdapter
 
     testImplementation dep.junit
     androidTestImplementation dep.testRunner
