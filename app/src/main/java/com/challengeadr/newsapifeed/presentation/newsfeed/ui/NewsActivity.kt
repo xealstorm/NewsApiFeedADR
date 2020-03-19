@@ -29,6 +29,11 @@ class NewsActivity : BaseActivity(), NewsView {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        newsPresenter.provideNews()
+    }
+
     override fun doInjections(activityComponent: ActivityComponent?) {
         activityComponent?.injectTo(this)
     }
