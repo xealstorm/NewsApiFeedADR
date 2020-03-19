@@ -34,6 +34,11 @@ ext.dep = [
 //        rxJava             : 'io.reactivex.rxjava2:rxjava:2.1.9',
 //        rxAndroid          : 'io.reactivex.rxjava2:rxandroid:2.0.2',
 
+        retrofit: 'com.squareup.retrofit:retrofit:1.9.0',
+        gson: 'com.squareup.retrofit2:converter-gson:2.3.0',
+        okhttp3: 'com.squareup.okhttp3:logging-interceptor:3.12.1',
+
+
         // tools
 //        coil               : 'io.coil-kt:coil:0.6.1',
         jdk                : 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61',

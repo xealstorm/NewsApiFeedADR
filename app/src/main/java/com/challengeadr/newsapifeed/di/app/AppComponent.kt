@@ -5,7 +5,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-    modules = [AppModule::class]
+    modules = [AppModule::class, NetworkServicesModule::class]
 )
 interface AppComponent {
 }
