@@ -14,7 +14,6 @@ import com.challengeadr.newsapifeed.R
 import com.challengeadr.newsapifeed.databinding.NewsItemBinding
 import com.challengeadr.newsapifeed.presentation.newsfeed.model.NewsItem
 
-
 class NewsAdapter : PagedListAdapter<NewsItem, NewsAdapter.NewsViewHolder>(DIFF_CALLBACK) {
 
     private val newsItems = ArrayList<NewsItem>()

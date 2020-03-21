@@ -24,5 +24,7 @@ interface NewsRepository {
         receivedAt: Long = 0L
     )
 
+    fun getItemsInitialOrNull(itemsToRequest: Int): RealmResults<NewsModel>?
+
     fun getItemsOrNull(page: Int, itemsLimit: Int): RealmResults<NewsModel>?
 }

@@ -7,6 +7,6 @@ interface NetworkService {
     fun getItems(
         page: Int = Configuration.DEFAULT_PAGE_NUMBER,
         pageSize: Int = Configuration.DEFAULT_ITEMS_INITIAL_NUMBER,
-        countryCode: String = Configuration.COUNTRY_CODE_OF_SOURCES
+        countryCode: String
     ): Single<ItemsResponse>
 }

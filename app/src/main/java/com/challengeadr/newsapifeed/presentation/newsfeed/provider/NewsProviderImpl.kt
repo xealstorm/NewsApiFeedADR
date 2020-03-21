@@ -1,6 +1,7 @@
 package com.challengeadr.newsapifeed.presentation.newsfeed.provider
 
 import android.util.Log
+import com.challengeadr.newsapifeed.App
 import com.challengeadr.newsapifeed.db.repository.NewsRepository
 import com.challengeadr.newsapifeed.network.Configuration
 import com.challengeadr.newsapifeed.network.NetworkService
@@ -10,6 +11,7 @@ import com.challengeadr.newsapifeed.util.format.TimeFormatter
 import com.challengeadr.newsapifeed.util.scedulers.SchedulerProvider
 import org.joda.time.DateTime
 import java.lang.IllegalArgumentException
+import java.util.*
 
 class NewsProviderImpl(
     private val newsRepository: NewsRepository,
@@ -17,47 +19,44 @@ class NewsProviderImpl(
     private val schedulerProvider: SchedulerProvider
 ) : NewsProvider {
     /**
-     * Gets the list of the news items
-     * @param page - an index of a page to request
-     * @param pageSize – an amount of items for the page to request
-     * @param countryCode - a 2-symbol code of the country for the news to request
+     * Gets the initial list of the news items
+     * @param itemsToRequest - an amount of items to request
      * @param onSuccess - a method that handles the list of news items once it's received
      * @param onError - a method that handles the error thrown
      */
-    override fun getItems(
+    override fun getItemsInitial(
+        itemsToRequest: Int,
+        onSuccess: (newsItems: List<NewsItem>) -> Unit,
+        onError: (t: Throwable?) -> Unit
+    ) {
+        val realmNewsModels = newsRepository.getItemsInitialOrNull(itemsToRequest)
+        if (realmNewsModels.isNullOrEmpty()) {
+            requestFromApiAndPersistLocally(1, itemsToRequest)
+                .subscribe({ newsItems ->
+                    onSuccess(newsItems)
+                }, { t: Throwable? ->
+                    Log.e(TAG, t.toString())
+                    onError(t)
+                })
+        }
+    }
+
+    /**
+     * Gets the list of the news items
+     * @param page - an index of a page to request
+     * @param pageSize – an amount of items for the page to request
+     * @param onSuccess - a method that handles the list of news items once it's received
+     * @param onError - a method that handles the error thrown
+     */
+    override fun getItemsAfter(
         page: Int,
         pageSize: Int,
-        countryCode: String,
         onSuccess: (newsItems: List<NewsItem>) -> Unit,
         onError: (t: Throwable?) -> Unit
     ) {
         val realmNewsModels = newsRepository.getItemsOrNull(page, pageSize)
         if (realmNewsModels.isNullOrEmpty()) {
-            networkService.getItems(page, pageSize, countryCode)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .map { itemsResponse ->
-                    saveDataLocally(itemsResponse, DateTime.now().millis, pageSize)
-                    newsRepository.getItemsOrNull(page, pageSize)
-                }
-                .map { newsModels ->
-                    if (newsModels.isNullOrEmpty()) {
-                        listOf<NewsItem>()
-                    } else {
-                        newsModels.map {
-                            NewsItem.create(
-                                it.sourceName,
-                                it.author,
-                                it.title,
-                                it.description,
-                                it.url,
-                                it.urlToImage,
-                                it.publishedAt,
-                                it.content
-                            )
-                        }
-                    }
-                }
+            requestFromApiAndPersistLocally(page, pageSize)
                 .subscribe({ newsItems ->
                     onSuccess(newsItems)
                 }, { t: Throwable? ->
@@ -82,6 +81,42 @@ class NewsProviderImpl(
     }
 
     /**
+     * Requests the items from the API and persists in a local DB
+     * @param page - an index of a page to request
+     * @param pageSize – an amount of items for the page to request
+     */
+    private fun requestFromApiAndPersistLocally(page: Int, pageSize: Int) =
+        networkService.getItems(
+            page,
+            pageSize,
+            getCountryCode(App.context.resources.configuration.locale.language)
+        )
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
+            .map { itemsResponse ->
+                saveDataLocally(itemsResponse, DateTime.now().millis, pageSize)
+                newsRepository.getItemsOrNull(page, pageSize)
+            }
+            .map { newsModels ->
+                if (newsModels.isNullOrEmpty()) {
+                    listOf<NewsItem>()
+                } else {
+                    newsModels.map {
+                        NewsItem.create(
+                            it.sourceName,
+                            it.author,
+                            it.title,
+                            it.description,
+                            it.url,
+                            it.urlToImage,
+                            it.publishedAt,
+                            it.content
+                        )
+                    }
+                }
+            }
+
+    /**
      * Saves the articles from the API response to the according table of the DB.
      * Each article has a timestamp indicating when it was received.
      * Every new timestamp is also put into a Timestamp table in the DB.
@@ -97,7 +132,10 @@ class NewsProviderImpl(
     ) {
         if (itemsResponse?.articles != null) {
             if (itemsResponse.articles.filterNotNull().isNotEmpty()) {
-                newsRepository.addTimestamp(itemsReceivedAt, pageSize / Configuration.DEFAULT_ITEMS_PER_PAGE_NUMBER)
+                newsRepository.addTimestamp(
+                    itemsReceivedAt,
+                    pageSize / Configuration.DEFAULT_ITEMS_PER_PAGE_NUMBER
+                )
                 itemsResponse.articles.filterNotNull().forEach { article ->
                     newsRepository.addOrUpdateNewsModel(
                         article.author,
@@ -121,6 +159,15 @@ class NewsProviderImpl(
                     )
                 }
             }
+        }
+    }
+
+    private fun getCountryCode(language: String): String {
+        val code = language.substringAfterLast('-')
+        return if (Locale.getISOCountries().any { it.equals(code, true) }) {
+            code
+        } else {
+            Configuration.COUNTRY_CODE_OF_SOURCES
         }
     }
 

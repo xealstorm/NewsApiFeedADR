@@ -14,12 +14,17 @@ class NewsDataSource(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, NewsItem>
     ) {
-        newsProvider.getItems({ newsItems ->
-            Log.i(TAG, newsItems.toString())
-            callback.onResult(newsItems, null, 4)
-        }, { t ->
-            Log.e(TAG, t.toString())
-        })
+        newsProvider.getItemsInitial(
+            params.requestedLoadSize, { newsItems ->
+                Log.i(TAG, newsItems.toString())
+                callback.onResult(
+                    newsItems,
+                    null,
+                    newsItems.size / Configuration.DEFAULT_ITEMS_PER_PAGE_NUMBER + 1
+                )
+            }, { t ->
+                Log.e(TAG, t.toString())
+            })
     }
 
     override fun loadBefore(
@@ -32,10 +37,9 @@ class NewsDataSource(
         params: LoadParams<Int>,
         callback: LoadCallback<Int, NewsItem>
     ) {
-        newsProvider.getItems(
+        newsProvider.getItemsAfter(
             params.key,
             params.requestedLoadSize,
-            Configuration.COUNTRY_CODE_OF_SOURCES,
             { newsItems ->
                 Log.i(TAG, newsItems.toString())
                 val nextKey: Int? =

@@ -15,9 +15,9 @@ class NewsDataSourceFactory(
     }
 
     companion object {
-        fun providePagingConfig(): PagedList.Config = PagedList.Config.Builder()
+        fun providePagingConfig(itemsInitial: Int): PagedList.Config = PagedList.Config.Builder()
             .setEnablePlaceholders(true)
-            .setInitialLoadSizeHint(Configuration.DEFAULT_ITEMS_INITIAL_NUMBER)
+            .setInitialLoadSizeHint(itemsInitial)
             .setPageSize(Configuration.DEFAULT_ITEMS_PER_PAGE_NUMBER)
             .build()
     }

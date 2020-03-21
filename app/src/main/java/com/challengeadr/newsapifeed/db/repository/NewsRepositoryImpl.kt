@@ -2,6 +2,7 @@ package com.challengeadr.newsapifeed.db.repository
 
 import com.challengeadr.newsapifeed.db.model.NewsModel
 import com.challengeadr.newsapifeed.db.model.NewsTimestampModel
+import com.challengeadr.newsapifeed.network.Configuration
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
@@ -63,6 +64,26 @@ class NewsRepositoryImpl(private val realm: Realm) : NewsRepository {
                     receivedAt
                 )
             )
+        }
+    }
+
+    /**
+     * Gets news models initially, limited by the parameter
+     * @param itemsToRequest - an amount of items to request
+     */
+    override fun getItemsInitialOrNull(itemsToRequest: Int): RealmResults<NewsModel>? {
+        var pagesToRequest = itemsToRequest / Configuration.DEFAULT_ITEMS_PER_PAGE_NUMBER
+        if (itemsToRequest % Configuration.DEFAULT_ITEMS_PER_PAGE_NUMBER > 0) {
+            pagesToRequest++
+        }
+        val timestampResults = realm.where(NewsTimestampModel::class.java)
+            .sort(NewsTimestampModel.RECEIVED_AT_FIELD, Sort.ASCENDING)
+            .findAll()
+        val timestampForPage = getValidTimeStampOrNull(timestampResults, pagesToRequest)
+        return if (timestampForPage != null) {
+            getItemsNotLaterThanTimestampOrNull(timestampForPage, itemsToRequest)
+        } else {
+            null
         }
     }
 
@@ -134,6 +155,25 @@ class NewsRepositoryImpl(private val realm: Realm) : NewsRepository {
         return if (receivedAt != null) {
             realm.where(NewsModel::class.java)
                 .equalTo(NewsModel.RECEIVED_AT_FIELD, receivedAt)
+                .limit(itemsLimit.toLong())
+                .findAll()
+        } else {
+            null
+        }
+    }
+
+    /**
+     * Returns items that were received not later than timestamp
+     * @param receivedAt - a timestamp to get the news according to
+     * @param itemsLimit - a number of news items to return
+     */
+    private fun getItemsNotLaterThanTimestampOrNull(
+        receivedAt: Long?,
+        itemsLimit: Int
+    ): RealmResults<NewsModel>? {
+        return if (receivedAt != null) {
+            realm.where(NewsModel::class.java)
+                .lessThanOrEqualTo(NewsModel.RECEIVED_AT_FIELD, receivedAt)
                 .limit(itemsLimit.toLong())
                 .findAll()
         } else {
