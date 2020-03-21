@@ -1,11 +1,11 @@
 package com.challengeadr.newsapifeed.di.presenter
 
-import com.challengeadr.newsapifeed.db.repository.NewsRepository
+import androidx.paging.DataSource
 import com.challengeadr.newsapifeed.di.activity.ActivityScope
-import com.challengeadr.newsapifeed.network.NetworkService
+import com.challengeadr.newsapifeed.presentation.newsfeed.model.NewsItem
 import com.challengeadr.newsapifeed.presentation.newsfeed.presenter.NewsPresenter
 import com.challengeadr.newsapifeed.presentation.newsfeed.presenter.NewsPresenterImpl
-import com.challengeadr.newsapifeed.util.scedulers.AppSchedulerProvider
+import com.challengeadr.newsapifeed.util.scedulers.SchedulerProvider
 import dagger.Module
 import dagger.Provides
 
@@ -14,10 +14,9 @@ class PresenterModule {
     @Provides
     @ActivityScope
     fun provideNewsPresenter(
-        networkService: NetworkService,
-        newsRepository: NewsRepository,
-        schedulerProvider: AppSchedulerProvider
+        newsDataSourceFactory: DataSource.Factory<Int, NewsItem>,
+        schedulerProvider: SchedulerProvider
     ): NewsPresenter {
-        return NewsPresenterImpl(networkService, newsRepository, schedulerProvider)
+        return NewsPresenterImpl(newsDataSourceFactory, schedulerProvider)
     }
 }

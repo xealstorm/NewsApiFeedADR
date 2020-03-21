@@ -6,7 +6,12 @@ import io.realm.RealmResults
 interface NewsRepository {
     fun cleanItems()
 
-    fun addOrUpdateItem(
+    fun addTimestamp(
+        receivedAt: Long = 0L,
+        weight: Int = 1
+    )
+
+    fun addOrUpdateNewsModel(
         author: String? = "",
         title: String? = "",
         description: String? = "",
@@ -19,5 +24,5 @@ interface NewsRepository {
         receivedAt: Long = 0L
     )
 
-    fun getItems(): RealmResults<NewsModel>
+    fun getItemsOrNull(page: Int, itemsLimit: Int): RealmResults<NewsModel>?
 }

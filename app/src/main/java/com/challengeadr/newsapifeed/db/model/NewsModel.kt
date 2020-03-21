@@ -17,4 +17,7 @@ open class NewsModel(
     var sourceName: String? = "",
     var receivedAt:Long = 0L
 ) : RealmObject() {
+    companion object {
+        const val RECEIVED_AT_FIELD = "receivedAt"
+    }
 }

@@ -7,7 +7,8 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 
 object RealmCreator {
-    val REALM_FILE_NAME = "db.realm"
+    private const val REALM_FILE_NAME = "db.realm"
+
     fun create(context: Context): Realm {
         Stetho.initialize(
             Stetho.newInitializerBuilder(context)

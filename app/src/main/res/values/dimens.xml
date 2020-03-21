@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dimen_xs">4dp</dimen>
+    <dimen name="dimen_s">8dp</dimen>
+    <dimen name="dimen_m">16dp</dimen>
+    <dimen name="dimen_l">32dp</dimen>
+
+    <!-- custom dimens-->
+    <dimen name="dimen_news_item_image_width">250dp</dimen>
+</resources>

@@ -58,7 +58,7 @@ dependencies {
     implementation dep.appcompat
     implementation dep.ktxcore
     implementation dep.joda
-//    implementation dep.constraintLayout
+    implementation dep.constraintLayout
 
     implementation dep.dagger
     implementation dep.daggerAndroid
@@ -82,8 +82,10 @@ dependencies {
     testImplementation dep.mockito
 //    testImplementation dep.json
 
-//    implementation dep.cardview
+    implementation dep.cardview
     implementation dep.recyclerview
 //    implementation dep.coordinatorLayout
     implementation dep.androidMaterial
+    implementation dep.pagingRuntime
+    implementation dep.pagingRx
 }
