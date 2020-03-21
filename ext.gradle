@@ -27,6 +27,7 @@ ext.dep = [
         androidMaterial    : 'com.google.android.material:material:1.1.0',
         pagingRuntime      : "androidx.paging:paging-runtime:$ver.pagingVersion",
         pagingRx           : "androidx.paging:paging-rxjava2:$ver.pagingVersion",
+        swipeRefresh       : 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0',
 
         //dagger
         dagger             : "com.google.dagger:dagger:$ver.daggerVersion",

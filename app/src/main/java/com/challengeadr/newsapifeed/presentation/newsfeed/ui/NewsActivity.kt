@@ -32,6 +32,26 @@ class NewsActivity : BaseActivity(), NewsView {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_news)
         newsPresenter.setView(this@NewsActivity)
+        initRecyclerView()
+        newsAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
+                // scrolls to the element that was visible before screen had got rotated
+                if (firstVisiblePosition != null && newsAdapter.itemCount > 0) {
+                    gridLayoutManager.scrollToPosition(firstVisiblePosition!!)
+                    firstVisiblePosition = null
+                }
+            }
+        })
+        binding.newsSwipeRefreshLayout.setOnRefreshListener {
+            newsPresenter.dispose()
+            newsPresenter.removeNews()
+            newsPresenter.provideNews()
+        }
+        newsPresenter.provideNews(savedInstanceState?.getInt(PAGES_KEY))
+    }
+
+    private fun initRecyclerView(){
         with(binding.newsRecyclerView) {
             adapter = newsAdapter
             gridLayoutManager = GridLayoutManager(
@@ -49,17 +69,6 @@ class NewsActivity : BaseActivity(), NewsView {
             }
             layoutManager = gridLayoutManager
         }
-        newsAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                super.onItemRangeInserted(positionStart, itemCount)
-                // scrolls to the element that was visible before screen had got rotated
-                if (firstVisiblePosition != null && newsAdapter.itemCount > 0) {
-                    gridLayoutManager.scrollToPosition(firstVisiblePosition!!)
-                    firstVisiblePosition = null
-                }
-            }
-        })
-        newsPresenter.provideNews(savedInstanceState?.getInt(PAGES_KEY))
     }
 
     override fun onDestroy() {
@@ -73,6 +82,10 @@ class NewsActivity : BaseActivity(), NewsView {
 
     override fun updateNewsWithData(pagedList: PagedList<NewsItem>) {
         newsAdapter.setNewsItems(pagedList)
+    }
+
+    override fun setRefreshingTo(value: Boolean) {
+        binding.newsSwipeRefreshLayout.isRefreshing = value
     }
 
     override fun onSaveInstanceState(state: Bundle) {

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.paging.DataSource
 import androidx.paging.RxPagedListBuilder
+import com.challengeadr.newsapifeed.db.repository.NewsRepository
 import com.challengeadr.newsapifeed.network.Configuration
 import com.challengeadr.newsapifeed.presentation.newsfeed.model.NewsDataSourceFactory
 import com.challengeadr.newsapifeed.presentation.newsfeed.model.NewsItem
@@ -13,7 +14,8 @@ import io.reactivex.disposables.Disposables
 
 class NewsPresenterImpl(
     private val newsDataSourceFactory: DataSource.Factory<Int, NewsItem>,
-    private val schedulerProvider: SchedulerProvider
+    private val schedulerProvider: SchedulerProvider,
+    private val newsRepository: NewsRepository
 ) : NewsPresenter {
     private var view: NewsView? = null
     private var disposable = Disposables.empty()
@@ -46,13 +48,19 @@ class NewsPresenterImpl(
             .observeOn(schedulerProvider.ui())
             .subscribe({ pagedList ->
                 view?.updateNewsWithData(pagedList)
+                view?.setRefreshingTo(false)
             }, { t ->
                 Log.e(TAG, t.toString())
+                view?.setRefreshingTo(false)
             })
     }
 
     @VisibleForTesting
     internal fun getView(): NewsView? = view
+
+    override fun removeNews() {
+        newsRepository.cleanItems()
+    }
 
     override fun dispose() {
         disposable.dispose()

@@ -88,4 +88,5 @@ dependencies {
     implementation dep.androidMaterial
     implementation dep.pagingRuntime
     implementation dep.pagingRx
+    implementation dep.swipeRefresh
 }

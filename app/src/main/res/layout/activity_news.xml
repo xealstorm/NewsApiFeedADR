@@ -23,12 +23,20 @@
                 app:titleTextColor="@android:color/white" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/newsRecyclerView"
-            android:scrollbars="vertical"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/newsSwipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context=".presentation.news.ui.NewsActivity" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/newsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+
+                tools:context=".presentation.news.ui.NewsActivity" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>

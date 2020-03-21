@@ -6,4 +6,6 @@ import com.challengeadr.newsapifeed.presentation.newsfeed.model.NewsItem
 
 interface NewsView : BaseView {
     fun updateNewsWithData(pagedList: PagedList<NewsItem>)
+
+    fun setRefreshingTo(value: Boolean)
 }
