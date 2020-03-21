@@ -3,7 +3,7 @@ package com.challengeadr.newsapifeed.presentation.newsfeed.model
 import android.util.Log
 import androidx.paging.PageKeyedDataSource
 import com.challengeadr.newsapifeed.network.Configuration
-import com.challengeadr.newsapifeed.presentation.newsfeed.provider.NewsProvider
+import com.challengeadr.newsapifeed.provider.NewsProvider
 
 
 class NewsDataSource(

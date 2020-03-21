@@ -2,8 +2,8 @@ package com.challengeadr.newsapifeed.di.provider
 
 import com.challengeadr.newsapifeed.db.repository.NewsRepository
 import com.challengeadr.newsapifeed.network.NetworkService
-import com.challengeadr.newsapifeed.presentation.newsfeed.provider.NewsProvider
-import com.challengeadr.newsapifeed.presentation.newsfeed.provider.NewsProviderImpl
+import com.challengeadr.newsapifeed.provider.NewsProvider
+import com.challengeadr.newsapifeed.provider.NewsProviderImpl
 import com.challengeadr.newsapifeed.util.scedulers.SchedulerProvider
 import dagger.Module
 import dagger.Provides

@@ -3,7 +3,7 @@ package com.challengeadr.newsapifeed.di.datasource
 import androidx.paging.DataSource
 import com.challengeadr.newsapifeed.presentation.newsfeed.model.NewsDataSourceFactory
 import com.challengeadr.newsapifeed.presentation.newsfeed.model.NewsItem
-import com.challengeadr.newsapifeed.presentation.newsfeed.provider.NewsProvider
+import com.challengeadr.newsapifeed.provider.NewsProvider
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

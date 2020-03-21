@@ -3,7 +3,7 @@ package com.challengeadr.newsapifeed.presentation.newsfeed.model
 import androidx.paging.DataSource
 import androidx.paging.PagedList
 import com.challengeadr.newsapifeed.network.Configuration
-import com.challengeadr.newsapifeed.presentation.newsfeed.provider.NewsProvider
+import com.challengeadr.newsapifeed.provider.NewsProvider
 
 class NewsDataSourceFactory(
     private val newsProvider: NewsProvider

@@ -1,4 +1,4 @@
-package com.challengeadr.newsapifeed.presentation.newsfeed.provider
+package com.challengeadr.newsapifeed.provider
 
 import android.util.Log
 import com.challengeadr.newsapifeed.App
