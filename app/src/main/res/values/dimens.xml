@@ -6,7 +6,9 @@
     <dimen name="dimen_l">32dp</dimen>
 
     <!-- custom dimens-->
-    <dimen name="dimen_news_item_image_width">250dp</dimen>
+    <dimen name="dimen_news_item_narrow_image_width">150dp</dimen>
+    <dimen name="dimen_news_item_wide_image_width">120dp</dimen>
+    <dimen name="dimen_news_item_card_height">290dp</dimen>
 
     <integer name="grid_cells_amount">2</integer>
 </resources>

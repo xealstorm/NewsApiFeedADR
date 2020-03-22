@@ -52,7 +52,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-//    implementation dep.coil
+    implementation dep.coil
 
     implementation dep.jdk
     implementation dep.appcompat

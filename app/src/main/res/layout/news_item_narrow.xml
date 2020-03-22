@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_s"
+        android:layout_marginTop="@dimen/dimen_s"
+        android:layout_marginRight="@dimen/dimen_s"
+        android:minHeight="@dimen/dimen_news_item_card_height"
+        app:cardElevation="@dimen/dimen_xs">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="@dimen/dimen_news_item_card_height">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/newsView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_news_item_narrow_image_width"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_launcher_background" />
+
+            <TextView
+                android:id="@+id/newsTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_s"
+                android:layout_marginTop="@dimen/dimen_s"
+                android:layout_marginEnd="@dimen/dimen_s"
+                android:textAlignment="textEnd"
+                android:textAppearance="@style/NewsAdditionalText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/newsView"
+                tools:text="2h ago" />
+
+            <TextView
+                android:id="@+id/newsTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_s"
+                android:layout_marginEnd="@dimen/dimen_s"
+                android:maxLines="2"
+                android:textAppearance="@style/NewsTitleNarrowCardText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/newsTime"
+                tools:text="News Title" />
+
+            <TextView
+                android:id="@+id/newsSubtitle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/dimen_s"
+                android:maxLines="1"
+                android:textAppearance="@style/NewsSubtitleText"
+                app:layout_constraintBottom_toTopOf="@+id/newsSource"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/newsTitle"
+                tools:text="News content or description" />
+
+            <TextView
+                android:id="@+id/newsSource"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_s"
+                android:maxLines="1"
+                android:textAppearance="@style/NewsAdditionalText"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="From: some source" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

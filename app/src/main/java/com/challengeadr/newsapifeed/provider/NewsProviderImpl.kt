@@ -2,6 +2,7 @@ package com.challengeadr.newsapifeed.provider
 
 import android.util.Log
 import com.challengeadr.newsapifeed.App
+import com.challengeadr.newsapifeed.db.model.NewsModel
 import com.challengeadr.newsapifeed.db.repository.NewsRepository
 import com.challengeadr.newsapifeed.network.Configuration
 import com.challengeadr.newsapifeed.network.NetworkService
@@ -9,6 +10,7 @@ import com.challengeadr.newsapifeed.network.model.ItemsResponse
 import com.challengeadr.newsapifeed.presentation.newsfeed.model.NewsItem
 import com.challengeadr.newsapifeed.util.format.TimeFormatter
 import com.challengeadr.newsapifeed.util.scedulers.SchedulerProvider
+import io.realm.RealmResults
 import org.joda.time.DateTime
 import java.lang.IllegalArgumentException
 import java.util.*
@@ -38,6 +40,9 @@ class NewsProviderImpl(
                     Log.e(TAG, t.toString())
                     onError(t)
                 })
+        } else {
+            val newsItems = fromRealmResults(realmNewsModels)
+            onSuccess(newsItems)
         }
     }
 
@@ -64,21 +69,23 @@ class NewsProviderImpl(
                     onError(t)
                 })
         } else {
-            val newsItems = realmNewsModels.map {
-                NewsItem.create(
-                    it.sourceName,
-                    it.author,
-                    it.title,
-                    it.description,
-                    it.url,
-                    it.urlToImage,
-                    it.publishedAt,
-                    it.content
-                )
-            }
+            val newsItems = fromRealmResults(realmNewsModels)
             onSuccess(newsItems)
         }
     }
+
+    private fun fromRealmResults(realmNewsModels: RealmResults<NewsModel>) =
+        realmNewsModels.map {
+            NewsItem.create(
+                it.sourceName,
+                it.title,
+                it.description,
+                it.url,
+                it.urlToImage,
+                it.publishedAt,
+                it.content
+            )
+        }
 
     /**
      * Requests the items from the API and persists in a local DB
@@ -104,7 +111,6 @@ class NewsProviderImpl(
                     newsModels.map {
                         NewsItem.create(
                             it.sourceName,
-                            it.author,
                             it.title,
                             it.description,
                             it.url,
@@ -147,7 +153,8 @@ class NewsProviderImpl(
                             0L
                         } else {
                             try {
-                                TimeFormatter.dateDeFormatted(article.publishedAt)?.millis ?: 0L
+                                TimeFormatter.dateDeFormatted(article.publishedAt)?.millis
+                                    ?: 0L
                             } catch (e: IllegalArgumentException) {
                                 0L
                             }

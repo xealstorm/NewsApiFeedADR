@@ -1,21 +1,23 @@
 package com.challengeadr.newsapifeed.presentation.newsfeed.model
 
-import org.joda.time.DateTime
+import android.content.Context
+import com.challengeadr.newsapifeed.util.format.TimeFormatter
 
 data class NewsItem(
     val sourceName: String,
-    val author: String,
     val title: String,
     val description: String,
     val url: String,
     val urlToImage: String,
-    val publishedAt: DateTime,
+    val publishedAt: Long,
     val content: String
 ) {
+    fun getPublishedDateFormatted(context: Context) =
+        TimeFormatter.dateFormatted(context, publishedAt)
+
     companion object {
         fun create(
             sourceName: String?,
-            author: String?,
             title: String?,
             description: String?,
             url: String?,
@@ -25,12 +27,11 @@ data class NewsItem(
         ): NewsItem {
             return NewsItem(
                 sourceName ?: "",
-                author ?: "",
                 title ?: "",
                 description ?: "",
                 url ?: "",
                 urlToImage ?: "",
-                DateTime.now().withMillis(publishedAt),
+                publishedAt,
                 content ?: ""
             )
         }

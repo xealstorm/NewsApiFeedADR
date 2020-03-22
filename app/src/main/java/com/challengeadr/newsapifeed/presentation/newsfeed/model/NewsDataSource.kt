@@ -5,7 +5,6 @@ import androidx.paging.PageKeyedDataSource
 import com.challengeadr.newsapifeed.network.Configuration
 import com.challengeadr.newsapifeed.provider.NewsProvider
 
-
 class NewsDataSource(
     private val newsProvider: NewsProvider
 ) : PageKeyedDataSource<Int, NewsItem>() {
@@ -20,7 +19,7 @@ class NewsDataSource(
                 callback.onResult(
                     newsItems,
                     null,
-                    newsItems.size / Configuration.DEFAULT_ITEMS_PER_PAGE_NUMBER + 1
+                    provideNextPage(newsItems.size)
                 )
             }, { t ->
                 Log.e(TAG, t.toString())
@@ -53,6 +52,14 @@ class NewsDataSource(
                 Log.e(TAG, t.toString())
             })
     }
+
+    private fun provideNextPage(itemsSize: Int) =
+        itemsSize / Configuration.DEFAULT_ITEMS_PER_PAGE_NUMBER +
+                if (itemsSize % Configuration.DEFAULT_ITEMS_PER_PAGE_NUMBER == 0) {
+                    1
+                } else {
+                    2
+                }
 
     companion object {
         private val TAG = NewsDataSource::class.java.simpleName
