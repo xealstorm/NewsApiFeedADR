@@ -131,7 +131,7 @@ class NewsProviderImpl(
      * @param itemsReceivedAt - a timestamp indicating the time the itemsResponse was fetched at
      * @param pageSize - an amount of articles requested for this page
      */
-    private fun saveDataLocally(
+    internal fun saveDataLocally(
         itemsResponse: ItemsResponse?,
         itemsReceivedAt: Long,
         pageSize: Int
@@ -169,13 +169,13 @@ class NewsProviderImpl(
         }
     }
 
-    private fun getCountryCode(language: String): String {
+    internal fun getCountryCode(language: String): String {
         val code = language.substringAfterLast('-')
         return if (Locale.getISOCountries().any { it.equals(code, true) }) {
             code
         } else {
             Configuration.COUNTRY_CODE_OF_SOURCES
-        }
+        }.toLowerCase()
     }
 
     companion object {

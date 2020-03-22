@@ -17,7 +17,6 @@ import com.challengeadr.newsapifeed.databinding.NewsItemNarrowBinding
 import com.challengeadr.newsapifeed.databinding.NewsItemWideBinding
 import com.challengeadr.newsapifeed.network.Configuration
 import com.challengeadr.newsapifeed.presentation.newsfeed.model.NewsItem
-import com.challengeadr.newsapifeed.util.format.TimeFormatter
 
 class NewsAdapter : PagedListAdapter<NewsItem, NewsAdapter.NewsViewHolder>(DIFF_CALLBACK) {
 
