@@ -53,4 +53,4 @@ Improve UX by opening an article inside the app
 ## Installation guide  
 In order to retrieve the data you will need a valid API key from the newsapi.org.  
 Please paste it into security.gradle file. The result should look like this:  
-newsOrgApiKey  : "\"1234567890abcdef1234567890abcdef\""
+newsOrgApiKey  : "\\"1234567890abcdef1234567890abcdef\\""
