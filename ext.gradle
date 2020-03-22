@@ -23,7 +23,6 @@ ext.dep = [
         constraintLayout   : 'androidx.constraintlayout:constraintlayout:1.1.3',
         cardview           : 'androidx.cardview:cardview:1.0.0',
         recyclerview       : 'androidx.recyclerview:recyclerview:1.1.0',
-//        coordinatorLayout  : "androidx.coordinatorlayout:coordinatorlayout:1.1.0",
         androidMaterial    : 'com.google.android.material:material:1.1.0',
         pagingRuntime      : "androidx.paging:paging-runtime:$ver.pagingVersion",
         pagingRx           : "androidx.paging:paging-rxjava2:$ver.pagingVersion",
@@ -57,5 +56,4 @@ ext.dep = [
         testRunner         : 'androidx.test:runner:1.2.0',
         testEspresso       : 'androidx.test.espresso:espresso-core:3.2.0',
         mockito            : 'org.mockito:mockito-inline:2.13.0',
-//        json               : 'org.json:json:20190722'
 ]
