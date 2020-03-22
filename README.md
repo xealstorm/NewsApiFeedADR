@@ -36,6 +36,7 @@ how many default pages this or that request contains. 21 item equals to the weig
 To store the data there are 2 tables:   
 - NewsTimestamp model is for having a list of timestamps with associated weights.  
 - News model is for storing the data of each article.  
+
 Pagination library (a part of Android architecture components) is used for supporting the pagination. 
 To make it work we heave NewsDataSource defined that manages getting the data and pasting it to the UI.  
 NewsProviderImpl handles the process of providing the data. It checks the DB according to the amount of 
